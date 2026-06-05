@@ -12,6 +12,8 @@ class ProductsPage extends StatelessWidget {
           // await DbHelperProducts().initDatabase();
           DbHelperProducts dbHelperProducts = DbHelperProducts();
           // dbHelperProducts.insertProduct("Teclado", 150.00, 2);
+          // dbHelperProducts.actualizarProducto(2, "Ratón Gamer");
+          dbHelperProducts.eliminarProducto(3);
           List<Map<String, dynamic>> productosObtenidos = await dbHelperProducts
               .obtenerProductos();
           ;

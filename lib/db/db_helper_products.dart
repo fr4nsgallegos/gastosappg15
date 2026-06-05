@@ -4,6 +4,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+// DB SIN PATRÓN SINGLETON
+
 class DbHelperProducts {
   Database? myProductsDatabase;
 
@@ -22,7 +24,7 @@ class DbHelperProducts {
               precio REAL NOT NULL,
               stock INTEGER NOT NULL
             )
-        
+
         """);
       },
     );
@@ -41,12 +43,29 @@ class DbHelperProducts {
   // OBTENER REGISTROS
   Future<List<Map<String, dynamic>>> obtenerProductos() async {
     final db = await initDatabase();
-    // return db.rawQuery("SELECT * FROM productos");
+    return db.rawQuery("SELECT * FROM productos");
     // return db.rawQuery("SELECT nombre, stock FROM productos WHERE stock < 11");
-    return db.query(
+    // return db.query(
+    //   "productos",
+    //   where: "nombre = 'Teclado' ",
+    //   columns: ["id,nombre"],
+    // );
+  }
+
+  // ACTUALIZACIÓN
+  Future<void> actualizarProducto(int id, String nombre) async {
+    final db = await initDatabase();
+    await db.update(
       "productos",
-      where: "nombre = 'Teclado' ",
-      columns: ["id,nombre"],
+      {"nombre": nombre},
+      where: "id = ?",
+      whereArgs: [id],
     );
+  }
+
+  // ELIMINACIÓN
+  Future<void> eliminarProducto(int id) async {
+    final db = await initDatabase();
+    await db.delete("productos", where: "id = ? ", whereArgs: [id]);
   }
 }
