@@ -37,4 +37,16 @@ class DbHelperProducts {
       "stock": stock,
     });
   }
+
+  // OBTENER REGISTROS
+  Future<List<Map<String, dynamic>>> obtenerProductos() async {
+    final db = await initDatabase();
+    // return db.rawQuery("SELECT * FROM productos");
+    // return db.rawQuery("SELECT nombre, stock FROM productos WHERE stock < 11");
+    return db.query(
+      "productos",
+      where: "nombre = 'Teclado' ",
+      columns: ["id,nombre"],
+    );
+  }
 }

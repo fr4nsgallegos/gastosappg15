@@ -8,10 +8,15 @@ class ProductsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           // await DbHelperProducts().initDatabase();
           DbHelperProducts dbHelperProducts = DbHelperProducts();
-          dbHelperProducts.insertProduct("Laptop", 2500.00, 10);
+          // dbHelperProducts.insertProduct("Teclado", 150.00, 2);
+          List<Map<String, dynamic>> productosObtenidos = await dbHelperProducts
+              .obtenerProductos();
+          ;
+
+          print(productosObtenidos);
         },
       ),
     );
