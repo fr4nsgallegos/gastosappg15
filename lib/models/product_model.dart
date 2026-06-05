@@ -20,7 +20,7 @@ class ProductModel {
       id: map["id"],
       nombre: map["nombre"],
       precio: map["precio"],
-      stock: map["stocl"],
+      stock: map["stock"],
     );
   }
 }
