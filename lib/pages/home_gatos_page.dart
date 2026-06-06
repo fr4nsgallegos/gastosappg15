@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gastosappg15/models/gasto_model.dart';
+import 'package:gastosappg15/widgets/custom_card_widget.dart';
 import 'package:gastosappg15/widgets/field_widget.dart';
 
 class HomeGatosPage extends StatefulWidget {
@@ -63,7 +65,7 @@ class _HomeGatosPageState extends State<HomeGatosPage> {
                           ),
                         ),
                         Text(
-                          "gestiona tus gastos de la mejor forma",
+                          "Gestiona tus gastos de la mejor forma",
                           style: TextStyle(color: Colors.grey),
                         ),
                         Padding(
@@ -71,6 +73,22 @@ class _HomeGatosPageState extends State<HomeGatosPage> {
                           child: FieldWidget(
                             controller: _searchController,
                             hintText: "Buscar por gasto",
+                          ),
+                        ),
+
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: 2,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CustomCardWidget(
+                                gastoModel: GastoModel(
+                                  title: "Banco",
+                                  price: 500,
+                                  dateTime: "2026-05-06",
+                                  type: "Bank",
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ],
