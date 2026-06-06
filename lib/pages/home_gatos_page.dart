@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gastosappg15/models/gasto_model.dart';
 import 'package:gastosappg15/widgets/custom_card_widget.dart';
 import 'package:gastosappg15/widgets/field_widget.dart';
+import 'package:gastosappg15/widgets/register_modal_widget.dart';
 
 class HomeGatosPage extends StatefulWidget {
   const HomeGatosPage({super.key});
@@ -13,6 +14,15 @@ class HomeGatosPage extends StatefulWidget {
 class _HomeGatosPageState extends State<HomeGatosPage> {
   TextEditingController _searchController = TextEditingController();
 
+  void showRegisterModal() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return RegisterModalWidget();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,24 +32,29 @@ class _HomeGatosPageState extends State<HomeGatosPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  color: Colors.black,
-                  width: double.infinity,
-                  height: 110,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.add, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text(
-                        "Agregar",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                GestureDetector(
+                  onTap: () {
+                    showRegisterModal();
+                  },
+                  child: Container(
+                    color: Colors.black,
+                    width: double.infinity,
+                    height: 110,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.add, color: Colors.white),
+                        SizedBox(width: 8),
+                        Text(
+                          "Agregar",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
