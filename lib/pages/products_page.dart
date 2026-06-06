@@ -53,6 +53,80 @@ class _ProductsPageState extends State<ProductsPage> {
     await loadProducts();
   }
 
+  Future<void> showEditDialog(ProductModel product) async {
+    final TextEditingController editNombreController = TextEditingController(
+      text: product.nombre,
+    );
+    final TextEditingController editStockController = TextEditingController(
+      text: product.stock.toString(),
+    );
+    final TextEditingController editPrecioController = TextEditingController(
+      text: product.precio.toString(),
+    );
+
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Editar producto"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: editNombreController,
+                decoration: InputDecoration(labelText: "Nombre"),
+              ),
+              TextField(
+                controller: editPrecioController,
+                decoration: InputDecoration(labelText: "Precio"),
+              ),
+              TextField(
+                controller: editStockController,
+                decoration: InputDecoration(labelText: "Stock"),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Cancelar"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final ProductModel updatedProductModel = ProductModel(
+                  id: product.id,
+                  nombre: editNombreController.text.trim(),
+                  precio:
+                      double.tryParse(editPrecioController.text.trim()) ?? 0,
+                  stock: int.tryParse(editStockController.text.trim()) ?? 0,
+                );
+                await DbHelperProducts.instance.updateProduct(
+                  updatedProductModel,
+                );
+
+                if (!context.mounted) return;
+                Navigator.pop(context);
+                await loadProducts();
+              },
+              child: Text("Editar"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    nombreController.dispose();
+    precioController.dispose();
+    stockController.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -183,7 +257,9 @@ class _ProductsPageState extends State<ProductsPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showEditDialog(product);
+                                },
                                 icon: Icon(Icons.edit),
                               ),
                               IconButton(
