@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gastosappg15/db/db_helper_gastos.dart';
 import 'package:gastosappg15/models/gasto_model.dart';
 import 'package:gastosappg15/widgets/custom_card_widget.dart';
 import 'package:gastosappg15/widgets/field_widget.dart';
@@ -13,14 +14,34 @@ class HomeGatosPage extends StatefulWidget {
 
 class _HomeGatosPageState extends State<HomeGatosPage> {
   TextEditingController _searchController = TextEditingController();
+  List<GastoModel> gastosList = [];
+
+  Future<void> getDataFromDB() async {
+    gastosList = await DbHelperGastos.instance.getGastos();
+    setState(() {});
+  }
 
   void showRegisterModal() {
     showModalBottomSheet(
+      isScrollControlled: true, //permite que el modal use mas altura
       context: context,
       builder: (BuildContext context) {
-        return RegisterModalWidget();
+        // CUANDO USAMOS FORMS dentor del showmodalbottomsheet debemos encerrar todo en un padding de la siguiente manera para que no se tape el contenido
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: RegisterModalWidget(),
+        );
       },
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDataFromDB();
   }
 
   @override
@@ -93,15 +114,10 @@ class _HomeGatosPageState extends State<HomeGatosPage> {
 
                         Expanded(
                           child: ListView.builder(
-                            itemCount: 2,
+                            itemCount: gastosList.length,
                             itemBuilder: (BuildContext context, int index) {
                               return CustomCardWidget(
-                                gastoModel: GastoModel(
-                                  title: "Banco",
-                                  price: 500,
-                                  dateTime: "2026-05-06",
-                                  type: "Bank",
-                                ),
+                                gastoModel: gastosList[index],
                               );
                             },
                           ),
