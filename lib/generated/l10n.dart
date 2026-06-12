@@ -78,6 +78,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Hi {name}`
+  String helloAlguien(Object name) {
+    return Intl.message(
+      'Hi $name',
+      name: 'helloAlguien',
+      desc: '',
+      args: [name],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

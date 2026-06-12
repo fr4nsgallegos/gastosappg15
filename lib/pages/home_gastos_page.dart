@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gastosappg15/db/db_helper_gastos.dart';
+import 'package:gastosappg15/generated/l10n.dart';
 import 'package:gastosappg15/models/gasto_model.dart';
 import 'package:gastosappg15/widgets/custom_card_widget.dart';
 import 'package:gastosappg15/widgets/field_widget.dart';
 import 'package:gastosappg15/widgets/register_modal_widget.dart';
 
-class HomeGatosPage extends StatefulWidget {
-  const HomeGatosPage({super.key});
+class HomeGastosPage extends StatefulWidget {
+  const HomeGastosPage({super.key});
 
   @override
-  State<HomeGatosPage> createState() => _HomeGatosPageState();
+  State<HomeGastosPage> createState() => _HomeGastosPageState();
 }
 
-class _HomeGatosPageState extends State<HomeGatosPage> {
+class _HomeGastosPageState extends State<HomeGastosPage> {
   TextEditingController _searchController = TextEditingController();
   List<GastoModel> gastosList = [];
 
@@ -46,6 +47,7 @@ class _HomeGatosPageState extends State<HomeGatosPage> {
 
   @override
   Widget build(BuildContext context) {
+    final texts = S.of(context);
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -94,12 +96,13 @@ class _HomeGatosPageState extends State<HomeGatosPage> {
                     child: Column(
                       children: [
                         Text(
-                          "Resumen de gastos",
+                          texts.appTitle,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        Text(texts.helloAlguien("Jhonny Gallegos")),
                         Text(
                           "Gestiona tus gastos de la mejor forma",
                           style: TextStyle(color: Colors.grey),
