@@ -3,13 +3,21 @@ import 'package:flutter/material.dart';
 class FieldWidget extends StatelessWidget {
   TextEditingController controller;
   String hintText;
-  FieldWidget({super.key, required this.controller, required this.hintText});
+  VoidCallback? function;
+  FieldWidget({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    this.function,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: TextField(
+        onTap: function,
+        readOnly: function != null ? true : false,
         controller: controller,
         decoration: InputDecoration(
           hintText: hintText,

@@ -18,6 +18,45 @@ class _RegisterModalWidgetState extends State<RegisterModalWidget> {
   TextEditingController dateController = TextEditingController();
   String typeSelected = "Alimentos";
 
+  void showSelectorDeFecha() async {
+    DateTime? selectedDay = await showDatePicker(
+      context: context,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2030),
+      initialDate: DateTime.now(),
+      helpText: "Selecciona una fecha",
+      cancelText: "Cancelar",
+      confirmText: "Aceptar",
+      fieldHintText: "dd/mm//aaaa",
+      fieldLabelText: "Fecha",
+      selectableDayPredicate: (day) {
+        return day.weekday != DateTime.sunday; //para deshabilitar algunos días
+      },
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.cyan, //Color del encabezado y la selección
+              onPrimary: Colors.white, //texto encabezado
+              onSurface: Colors.black, //texto calendario
+            ),
+            dialogTheme: DialogThemeData(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(20),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (selectedDay != null) {
+      dateController.text =
+          "${selectedDay.day}/${selectedDay.month}/${selectedDay.year}";
+    }
+    setState(() {});
+  }
+
   Widget _buildAddButton() {
     return SizedBox(
       height: 50,
@@ -75,6 +114,7 @@ class _RegisterModalWidgetState extends State<RegisterModalWidget> {
             FieldWidget(
               controller: dateController,
               hintText: "Ingresa la fecha",
+              function: showSelectorDeFecha,
             ),
             Wrap(
               spacing: 8,
