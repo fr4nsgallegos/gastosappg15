@@ -114,10 +114,16 @@ class _HomeGatosPageState extends State<HomeGatosPage> {
 
                         Expanded(
                           child: ListView.builder(
-                            itemCount: gastosList.length,
+                            itemCount: 1,
+                            // itemCount: gastosList.length,
                             itemBuilder: (BuildContext context, int index) {
                               return CustomCardWidget(
-                                gastoModel: gastosList[index],
+                                gastoModel: GastoModel(
+                                  title: "comida",
+                                  price: 250,
+                                  dateTime: "20626-06-06",
+                                  type: "alimentos",
+                                ),
                               );
                             },
                           ),
